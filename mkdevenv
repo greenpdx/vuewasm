@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y vim curl wget build-essential openssh-server gpg vim git
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source '$HOME/.cargo/env'
+
+distro=`cat /etc/os-release | grep "^NAME"`
+#echo $distro
+if echo "$distro" | grep -q Ubuntu; then
+	echo "U"
+	#ubuntu
+	curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+	sudo apt-get install -y nodejs
+fi
+if echo "$distro" | grep -q Debian; then
+	echo "D"
+	#debian
+	sudo -s
+	curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
+	apt-get install -y nodejs
+	exit
+fi
+
+curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+cargo install rsw
+
+sudo npm i -g concurrently
+
+mkdir $HOME/bin
+
+

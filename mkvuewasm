@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Need project name"
+    echo "$ mkvuewasm PROJECT"
+    exit
+fi
+
+npm init vue@latest $1
+cd $1
+npm install
+
+npm i -D vite-plugin-rsw
+
+sed -i 's/vue()/vue(), ViteRsw()/' vite.config.js
+sed -i "/plugin-vue/a import { ViteRsw } from 'vite-plugin-rsw'" vite.config.js
+sed -i '/]/a server: {\n    host: true\n  },' vite.config.js
+
+sed -i 's/"dev": "vite"/"dev": "concurrently \\"rsw watch\\" \\"vite\\""/' package.json
+sed -i 's/vite build/rsw build \&\& tsc \&\& vite build/' package.json
+sed -i '/vite build/a  "rsw": "rsw",' package.json
+
+npm run rsw init &> /dev/null
+
+npm run rsw new wasm &> /dev/null
+
+sed -i '/NPM Package/a [[crates]]\nname = "wasm"' rsw.toml
+
+sed -i "/^<\/script>/i import init,{greet} from '../wasm/pkg'\n\ninit()\n" src/App.vue
+sed -i '/<div class/i <button @click="greet()">Greet<\/button><br\/>' src/App.vue
+
+echo "cd $1"
+echo "npm run dev"
+
+
