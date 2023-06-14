@@ -1,10 +1,27 @@
 # vuewasm
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started developing with Vue 3 in Vite to create WASM and a rust based backend using TypeScript
+
+## Setup development env.
+It workers with Ubuntu or Debian( with a user that has sudo capabilities).
+Need to install rust, wasm-pack,  greenpgx/vite-plugin-rsw, rsw.
+From a user account run 
+$ mkdevenv
+
+
+To create a new project, run from home directory, NAME is the name of your new project
+$ mkvuewasm NAME
+
+* see https://github.com/greenpdx/vite-plugin-rsw
+
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[VSCodium](https://vscodium.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) +
+[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) +
+[crates](https://marketplace.visualstudio.com/items?itemName=serayuzgur.crates) +
+[Better TOML](https://marketplace.visualstudio.com/items?itemName=bungcip.better-toml) +
+[WebAssembly Toolkit for VSCode](https://marketplace.visualstudio.com/items?itemName=dtsvet.vscode-wasm)
 
 ## Type Support for `.vue` Imports in TS
 
@@ -23,21 +40,38 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
+front-end
 ```sh
 npm install
 ```
 
 ### Compile and Hot-Reload for Development
+Need two terminals open, one for vue/WASM front-end and one for rust back-end
+The front-end listens on all addresses so it can be used inside a container
 
+front-end
 ```sh
 npm run dev
 ```
 
+back-end
+```sh
+cd rustbe
+cargo run
+```
+
 ### Type-Check, Compile and Minify for Production
 
+front-end
 ```sh
 npm run build
 ```
+
+back-end
+```sh
+cargo build
+```
+I like to use a nginx proxy server for the backend for production
 
 ### Lint with [ESLint](https://eslint.org/)
 
