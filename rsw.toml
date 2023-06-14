@@ -32,6 +32,9 @@ using = "wasm-pack"
 name = "wasm"
 link = true
 
+[[crates]]
+name = "wworker"
+link = true
 #! When there is only `name`, other fields will use the default configuration
 
 #! 📦 -------- package: rsw-hello --------
