@@ -3,7 +3,7 @@ mod utils;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::JsFuture;
 
-use web_sys::{console, Request, RequestInit, RequestMode, Response, Blob, window};
+use web_sys::{console, Request, RequestInit, RequestMode, Response, window};
 use js_sys::{Function, Array};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
